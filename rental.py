@@ -1,15 +1,15 @@
-user_name = input("Enter your name: ")
-print("Hello, " + user_name + "! Welcome to RoadCo")
-car_type = " "
+available_cars = {"sedan": 30, "suv": 50, "truck": 70, "van": 40, "sports car": 100}
+
 def car_choose():
     while True:
-        car_type = input("Enter the type of car you want to rent Sedan, SUV: ").strip().lower()
-        if car_type in ("sedan", "suv"):
-            return car_type.upper() if car_type == "suv" else car_type.title()
-        print("Please enter Sedan or SUV.")
+        print("Available Transports are Sedan, SUV, Truck, Van, Sports Car.")
+        car_type = input("Enter the type of car you want to rent: ").strip().lower()
+        
+        if car_type in available_cars:
+            return car_type
+        
+        print("Please choose a valid car type from the available options.")
 
-choosen_car = car_choose()
-print("Car Type: " + choosen_car)
 
 def rental_days():
     while True:
@@ -22,14 +22,16 @@ def rental_days():
         except ValueError:
             print("Please enter a whole number of days.")
 
+user_name = input("Enter your name: ")
+print("Hello, " + user_name + "! Welcome to RoadCo")
+
+choosen_car = car_choose()
+print("Car Type: " + choosen_car.title())
+
 req_days = rental_days()
 print(f"Days Rented: {req_days}")
 
-if choosen_car == "Sedan":
-    rental_cost_per_day = 30
-elif choosen_car == "SUV":
-    rental_cost_per_day = 50
-
+rental_cost_per_day = available_cars[choosen_car]
 total_cost = req_days * rental_cost_per_day
 
 if req_days > 7:
@@ -42,4 +44,4 @@ else:
     final_total_cost = total_cost
     print(f"No discount applied. Sub Total: ${final_total_cost}")
 
-print(f"The total cost of renting the {choosen_car} for {req_days} days is: ${final_total_cost}")
+print(f"The total cost of renting the {choosen_car.title()} for {req_days} days is: ${final_total_cost}")
