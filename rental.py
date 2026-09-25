@@ -1,3 +1,5 @@
+from datetime import datetime
+
 available_cars = {"sedan": 30, "suv": 50, "truck": 70, "van": 40, "sports car": 100}
 
 def car_choose():
@@ -45,3 +47,14 @@ else:
     print(f"No discount applied. Sub Total: ${final_total_cost}")
 
 print(f"The total cost of renting the {choosen_car.title()} for {req_days} days is: ${final_total_cost}")
+
+submit_time = datetime.now().strftime("%B %d, %Y at %I:%M:%S %p")
+
+with open("rental_receipt.txt", "a") as receipt_file:
+    receipt_file.write(f""" Rental Receipt | {submit_time}
+    Customer Name: {user_name}
+    Car Type: {choosen_car.title()}
+    Days Rented: {req_days}
+    Discount Applied: {discount}%
+    Total Cost: ${final_total_cost:.2f}
+""")
