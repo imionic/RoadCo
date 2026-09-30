@@ -1,10 +1,10 @@
 from datetime import datetime
 
-available_cars = {"sedan": 30, "suv": 50, "truck": 70, "van": 40, "sports car": 100}
+available_cars = {"sedan": 30, "suv": 50, "truck": 70, "van": 40, "sports car": 100, "convertible": 90, "minivan": 60, "hatchback": 35, "coupe": 80, "luxury car": 120}
 
 def car_choose():
     while True:
-        print("Available Transports are Sedan, SUV, Truck, Van, Sports Car.")
+        print("The available car types are: " + ", ".join(car.upper() if car == "suv" else car.title() for car in available_cars))
         car_type = input("Enter the type of car you want to rent: ").strip().lower()
         
         if car_type in available_cars:
@@ -28,7 +28,7 @@ user_name = input("Enter your name: ")
 print("Hello, " + user_name + "! Welcome to RoadCo")
 
 choosen_car = car_choose()
-print("Car Type: " + choosen_car.title())
+print("Car Type: " + (choosen_car.upper() if choosen_car == "suv" else choosen_car.title()))
 
 req_days = rental_days()
 print(f"Days Rented: {req_days}")
@@ -44,16 +44,16 @@ if req_days > 7:
 else:
     discount = 0
     final_total_cost = total_cost
-    print(f"No discount applied. Sub Total: ${final_total_cost}")
+    print(f"No discount applied. Sub Total: ${final_total_cost:.2f}")
 
-print(f"The total cost of renting the {choosen_car.title()} for {req_days} days is: ${final_total_cost}")
+print(f"The total cost of renting the {choosen_car.upper() if choosen_car == "suv" else choosen_car.title()} for {req_days} days is: ${final_total_cost:.2f}")
 
 submit_time = datetime.now().strftime("%B %d, %Y at %I:%M:%S %p")
 
 with open("rental_receipt.txt", "a") as receipt_file:
     receipt_file.write(f""" Rental Receipt | {submit_time}
     Customer Name: {user_name}
-    Car Type: {choosen_car.title()}
+    Car Type: {choosen_car.upper() if choosen_car == "suv" else choosen_car.title()}
     Days Rented: {req_days}
     Discount Applied: {discount}%
     Total Cost: ${final_total_cost:.2f}
