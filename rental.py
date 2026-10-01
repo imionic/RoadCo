@@ -1,5 +1,10 @@
 from datetime import datetime
 
+choosen_car = ""
+req_days = 0
+discount = 0
+final_total_cost = 0
+
 available_cars = {"sedan": 30, "suv": 50, "truck": 70, "van": 40, "sports car": 100, "convertible": 90, "minivan": 60, "hatchback": 35, "coupe": 80, "luxury car": 120}
 
 def car_choose():
@@ -24,29 +29,45 @@ def rental_days():
         except ValueError:
             print("Please enter a whole number of days.")
 
+def car_rental_service():
+
+    print("Welcome to RoadCo Car Rental Service!")
+    print("We offer a variety of car types for your rental needs.")
+    choosen_car = car_choose()
+    print("Car Type: " + (choosen_car.upper() if choosen_car == "suv" else choosen_car.title()))
+    req_days = rental_days()
+    print(f"Days Rented: {req_days}")
+    rental_cost_per_day = available_cars[choosen_car]
+    total_cost = req_days * rental_cost_per_day
+    if req_days > 7:
+        discount = 10
+        final_total_cost = total_cost * (1 - discount / 100)
+        total_discount = total_cost - final_total_cost
+        print(f"Discount Applied (10%): ${total_discount:.2f}")
+    else:
+        discount = 0
+        final_total_cost = total_cost
+        print(f"No discount applied. Sub Total: ${final_total_cost:.2f}")
+
+    print(f"The total cost of renting the {choosen_car.upper() if choosen_car == "suv" else choosen_car.title()} for {req_days} days is: ${final_total_cost:.2f}")
+
+def main():
+    print("""What would you like to do today?
+    1. Rent a car
+    2. View available cars
+    3. View your bookings
+    4. Cancel a booking
+    5. Exit""")
+    choice = input("Submit your choice by entering the corresponding number (1-5): ")
+
+    if choice == "1":
+        car_rental_service()
+
+
 user_name = input("Enter your name: ")
 print("Hello, " + user_name + "! Welcome to RoadCo")
+main()  
 
-choosen_car = car_choose()
-print("Car Type: " + (choosen_car.upper() if choosen_car == "suv" else choosen_car.title()))
-
-req_days = rental_days()
-print(f"Days Rented: {req_days}")
-
-rental_cost_per_day = available_cars[choosen_car]
-total_cost = req_days * rental_cost_per_day
-
-if req_days > 7:
-    discount = 10
-    final_total_cost = total_cost * (1 - discount / 100)
-    total_discount = total_cost - final_total_cost
-    print(f"Discount Applied (10%): ${total_discount:.2f}")
-else:
-    discount = 0
-    final_total_cost = total_cost
-    print(f"No discount applied. Sub Total: ${final_total_cost:.2f}")
-
-print(f"The total cost of renting the {choosen_car.upper() if choosen_car == "suv" else choosen_car.title()} for {req_days} days is: ${final_total_cost:.2f}")
 
 submit_time = datetime.now().strftime("%B %d, %Y at %I:%M:%S %p")
 
